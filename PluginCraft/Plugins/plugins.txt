@@ -1,0 +1,2 @@
+﻿This folder is used for storing plugins used by PluginCraft.
+To have a plugin enabled automatically on startup, simply copy/paste the plugin .dll's to this folder.
