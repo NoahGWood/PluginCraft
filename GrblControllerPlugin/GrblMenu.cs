@@ -12,6 +12,7 @@ namespace GrblControllerPlugin
                 if(ImGui.MenuItem("Add Grbl Device"))
                 {
                     Console.WriteLine("Adding GRBL Device");
+                    GrblPanel.ShowAddModel = true;
                 }
                 ImGui.EndMenu();
             }

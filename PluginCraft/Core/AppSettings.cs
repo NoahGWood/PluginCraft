@@ -12,7 +12,7 @@ namespace PluginCraft.Core
     {
         public static string SettingsFilePath = "settings.yaml";
         
-        public List<IYamlTypeConverter> TypeConverters = new();
+        public List<IYamlTypeConverter> TypeConverters = [];
 
         public delegate void HandleSettings(T settingsModel);
         public HandleSettings SettingsHandler;
@@ -36,8 +36,7 @@ namespace PluginCraft.Core
                 var yaml = File.ReadAllText(SettingsFilePath);
                 T settings = deser.Deserialize<T>(yaml);
                 SettingsModel = settings;
-                if(SettingsHandler != null)
-                    SettingsHandler(settings);
+                SettingsHandler?.Invoke(settings);
                 Logger.CoreDebug("Loaded Settings.");
             } else
             {

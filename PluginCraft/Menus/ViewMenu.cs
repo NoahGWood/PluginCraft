@@ -24,7 +24,7 @@ namespace PluginCraft.Menus
                 }
                 if(ImGui.MenuItem("About"))
                 {
-                    App.MainWindow.OpenAbout();
+                    MainWindow.OpenAbout();
                 }
                 ImGui.EndMenu();
             }

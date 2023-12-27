@@ -9,7 +9,7 @@ namespace PluginCraft
     {
         static void Main(string[] args)
         {
-            App.CreateApp("PluginCraft", 800, 600);
+            App.CreateApp("☧luginCraft", 800, 600);
             App.Start();
         }
     }

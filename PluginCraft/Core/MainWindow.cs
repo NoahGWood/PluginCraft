@@ -8,6 +8,8 @@ using PluginCraftLib.Interfaces;
 using PluginCraft.Menus;
 using PluginCraft.Panels;
 using PluginCraftLib.Classes;
+using OpenTK.Windowing.Common.Input;
+using StbImageSharp;
 
 namespace PluginCraft.Core
 {
@@ -16,41 +18,42 @@ namespace PluginCraft.Core
         private float m_Width;
         private float m_Height;
 
-        private List<IPanel> m_Panels;
-        private List<IMenu> m_Menus;
+        private List<IPanel> m_Panels = [];
+        private List<IMenu> m_Menus = [];
 
-        private List<ICommand> m_Commands = new List<ICommand>();
-        private List<EventPublisher> m_Events = new List<EventPublisher>();
+        private List<ICommand> m_Commands = [];
+        private List<EventPublisher> m_Events = [];
 
         private int m_FramebufferTexture;
         private int m_RectVAO;
         public ImGuiController ImGuiController;
 
-        private static FileMenu fileMenu = new();
-        private static EditMenu editMenu = new();
-        private static ViewMenu viewMenu = new();
-        private static PluginMenu pluginMenu = new();
-        private static AboutPanel aboutPanel = new();
-        private static PluginPanel pluginPanel = new();
-        public MainWindow(string title, int  width, int height)
+        private static readonly FileMenu fileMenu = new();
+        private static readonly EditMenu editMenu = new();
+        private static readonly ViewMenu viewMenu = new();
+        private static readonly PluginMenu pluginMenu = new();
+        private static readonly AboutPanel aboutPanel = new();
+        private static readonly PluginPanel pluginPanel = new();
+        public MainWindow(string title, int width, int height)
             : base(GameWindowSettings.Default, new NativeWindowSettings()
             {
                 Title = title,
-                Size = new Vector2i(width, height),
+                ClientSize = new Vector2i(width, height),
+                Vsync = VSyncMode.Adaptive,
+                AutoIconify = true,
                 StartVisible = true,
                 StartFocused = true,
                 WindowState = WindowState.Normal,
                 API = ContextAPI.OpenGL,
                 Profile = ContextProfile.Core,
-                APIVersion = new Version(3,3)
+                APIVersion = new Version(3,3),
+                
             })
        {
+            CreateWindowIcon();
             CenterWindow();
             m_Height = Size.Y;
             m_Width = Size.X;
-
-            m_Panels = new List<IPanel>();
-            m_Menus = new List<IMenu>();
             AddMenu(fileMenu);
             AddMenu(editMenu);
             AddMenu(viewMenu);
@@ -68,11 +71,11 @@ namespace PluginCraft.Core
         public void RemoveCommand(ICommand command) { m_Commands.Remove(command); }
         public void AddEventPublisher(EventPublisher eventPublisher) { m_Events.Add(eventPublisher); }
         public void RemoveEventPublisher(EventPublisher eventPublisher) { m_Events.Remove(eventPublisher); }
-        public void SetPlugin(Plugin p)
+        public static void SetPlugin(Plugin p)
         {
             pluginPanel.SetPlugin(p);
         }
-        public void OpenAbout()
+        public static void OpenAbout()
         {
             ((IPanel)aboutPanel).Open();
         }
@@ -171,6 +174,13 @@ namespace PluginCraft.Core
         {
             App.Stop();
             base.OnClosing(e);
+        }
+        private void CreateWindowIcon()
+        {
+            byte[] iconBytes = File.ReadAllBytes("Resources\\Icons\\ChiRhoGold.png");
+            ImageResult res = ImageResult.FromMemory(iconBytes);
+            Image icon = new Image(res.Width, res.Height, res.Data);
+            this.Icon = new WindowIcon(icon);
         }
     }
 }

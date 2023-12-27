@@ -6,7 +6,7 @@
     public static class App
     {
         public static bool EnableLogs = true;
-        public static string Name = null;
+        public static string Name = "";
         public static MainWindow MainWindow;
         public static ISettings Settings;
         public static void CreateApp(string name, int sizeX, int sizeY)
@@ -36,20 +36,13 @@
         }
         public static void Start()
         {
-            if(Settings != null)
-            {
-                Settings.LoadSettings(); // For some reason this doesn't work?
-            }
+            Settings?.LoadSettings(); // For some reason this doesn't work?
             MainWindow.Run();
         }
 
         public static void Stop()
         {
-            if(Settings != null)
-            {
-                Settings.SaveSettings();
-            }
+            Settings?.SaveSettings();
         }
-
     }
 }

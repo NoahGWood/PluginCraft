@@ -30,6 +30,7 @@ namespace CADPlugin
         }
         public CadPlugin()
         {
+            StringFileHandlers.Add(new CADFileHandler());
         }
         public override void DisablePlugin()
         {

@@ -29,6 +29,7 @@ namespace GrblControllerPlugin
         {
             Menus.Add(new GrblMenu());
             Panels.Add(new GrblPanel());
+            Panels.Add(new GrblViewerPanel());
         }
         public override void DisablePlugin()
         {
@@ -50,7 +51,7 @@ namespace GrblControllerPlugin
 
         public override void Execute()
         {
-            Console.WriteLine("Executed.");
+            this.EnablePlugin();
         }
 
         protected override void LogError(string message)

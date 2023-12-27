@@ -1,12 +1,19 @@
 ﻿using PluginCraftLib.Interfaces;
 using System.IO.Ports;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.ComponentModel;
+using System.Collections;
 
 namespace GrblControllerPlugin
 {
     public class GrblDevice : ISerialDevice
     {
-        private SerialPort serialPort;
+        public SerialPort serialPort { get; private set; }
+        private GrblSettings settings;
+        public GrblSettings GrblSettings { get { return settings; } }
+        public string Name = "";
+        public string AllData = "";
         public string Data {get; private set;} = string.Empty;
         public event EventHandler<EventArgs> DataReceived;
 
@@ -14,14 +21,16 @@ namespace GrblControllerPlugin
         {
             serialPort = new SerialPort(portName, baudRate);
             serialPort.DataReceived += SerialPort_DataReceived;
+            Name = portName;
+            settings = GrblSettings.GenSettings(this);
         }
 
         private void SerialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            Data = serialPort.ReadLine();
+            Data = serialPort.ReadExisting();
+            AllData += Data;
             DataReceived?.Invoke(this, new EventArgs());
         }
-
         public void Connect()
         {
             try
@@ -58,7 +67,7 @@ namespace GrblControllerPlugin
             } catch(Exception ex)
             {
                 Console.WriteLine($"Error reading data from serial device: {ex.Message}");
-                return null;
+                return "";
             }
         }
 
@@ -66,14 +75,31 @@ namespace GrblControllerPlugin
         {
             try
             {
-                serialPort.Write(data);
+                if (!serialPort.IsOpen)
+                    Connect();
+                serialPort.WriteLine(data);
             } catch(Exception ex)
             {
                 Console.WriteLine($"Error writing data to serial device: {ex.Message}");
             }
         }
-        private void SerialPort_DataReceived(object sender, DataReceivedEventArgs e)
+        public void Jog(string axis, float amt, int speed, bool absolute=false, bool inches=false)
         {
+            string cmd = $"$J={axis}{amt} F{speed}";
+            if (absolute)
+                cmd += " G90";
+            else
+                cmd += " G91";
+            if (inches)
+                cmd += " G20";
+            else
+                cmd += " G21";
+            WriteData(cmd);
+        }
+
+        public void Home()
+        {
+            WriteData("$H");
         }
     }
 }

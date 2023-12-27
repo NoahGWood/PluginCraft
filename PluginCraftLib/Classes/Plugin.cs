@@ -15,8 +15,15 @@ namespace PluginCraftLib.Classes
         public abstract string? UpdateURL { get; }
         public abstract string? License { get; }
         public abstract bool IsEnabled { get; set; }
-        public List<IMenu>? Menus { get; protected set; } = new();
-        public List<IPanel>? Panels { get; protected set; } = new();
+        // List of interfaces
+        public List<ICommand>? Commands { get; protected set; } = [];
+        public List<IEventListener>? EventListeners { get; protected set; } = [];
+        public List<IFileHandler<string>>? StringFileHandlers { get; protected set; } = [];
+        public List<IFileHandler<byte>>? ByteFileHandlers { get; protected set; } = [];
+        public List<IMenu>? Menus { get; protected set; } = [];
+        public List<IPanel>? Panels { get; protected set; } = [];
+        public List<ISerialDevice>? SerialDevices { get; protected set; } = [];
+        public List<ISettings>? Settings { get; protected set; } = [];
         public abstract void EnablePlugin();
         public abstract void DisablePlugin();
         public abstract void Execute();

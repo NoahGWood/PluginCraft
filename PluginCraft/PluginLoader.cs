@@ -35,6 +35,7 @@ namespace PluginCraft
                 {
                     if(typeof(Plugin).IsAssignableFrom(type))
                     {
+                        Console.WriteLine($"TYPE FOUND{type}");
                         lock(plugins)
                         {
                             Plugin plugin = (Plugin)Activator.CreateInstance(type);

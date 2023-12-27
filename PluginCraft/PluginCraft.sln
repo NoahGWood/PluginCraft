@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GrblControllerPlugin", "..\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PluginCraftLib", "..\PluginCraftLib\PluginCraftLib.csproj", "{0CFBD84D-C08E-440B-B1DB-6F28901887AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CADPlugin", "..\CADPlugin\CADPlugin.csproj", "{4F462902-5709-4FFC-850F-5842981FCEC5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CADPlugin", "..\CADPlugin\CADPlugin.csproj", "{4F462902-5709-4FFC-850F-5842981FCEC5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

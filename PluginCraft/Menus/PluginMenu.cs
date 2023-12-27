@@ -35,7 +35,7 @@ namespace PluginCraft.Menus
                         }
                         if (ImGui.MenuItem("About"))
                         {
-                            App.MainWindow.SetPlugin(plugin);
+                            MainWindow.SetPlugin(plugin);
                         }
                         if (ImGui.MenuItem("Help"))
                         {

@@ -9,7 +9,12 @@
 
   <ItemGroup>
     <PackageReference Include="ImGui.NET" Version="1.90.0.1" />
+    <PackageReference Include="NativeFileDialogSharp" Version="0.5.0" />
     <PackageReference Include="System.IO.Ports" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PluginCraft\PluginCraft.csproj" />
   </ItemGroup>
 
   <ItemGroup>
